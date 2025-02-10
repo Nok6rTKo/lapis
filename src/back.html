@@ -609,7 +609,7 @@
       const boldIndex = sentenceDiv.textContent.indexOf(boldText);
       if (boldIndex === -1) return;
 
-      const contextChars = 20; // Characters to show around bold text
+      const contextChars = 12; // Characters to show around bold text
       const start = Math.max(0, boldIndex - contextChars);
       const end = Math.min(fullText.length, boldIndex + boldText.length + contextChars);
 
