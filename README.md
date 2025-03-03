@@ -15,6 +15,7 @@ An advanced yet lightweight [Anki](https://apps.ankiweb.net/) notetype, thoughtf
   - [Key features](#key-features)
   - [How to use Lapis](#how-to-use-lapis)
   - [How to update Lapis](#how-to-update-lapis)
+  - [Lapis themes](#lapis-themes)
   - [FAQ](#faq)
     - [What is all this Anki, notetype and mining stuff?](#what-is-all-this-anki-notetype-and-mining-stuff)
     - [How do I set up sentence furigana?](#how-do-i-set-up-sentence-furigana)
@@ -39,7 +40,7 @@ An advanced yet lightweight [Anki](https://apps.ankiweb.net/) notetype, thoughtf
 
 ## Why was Lapis created?
 
-Lapis was co-created by [Ruri](https://github.com/bewizible) and [kuri](https://github.com/donkuri/) to provide an alternative to the Anki notetype both were using at the time, [Aquafina](https://github.com/Aquafina-water-bottle) and later [arbyste](https://github.com/arbyste/)'s [jp-mining-note](https://arbyste.github.io/jp-mining-note-prerelease/) (abbreviated JPMN henceforth). While this note is fantastic and was a major inspiration for Lapis, we had the following issues with it:
+Lapis was co-created by [Ruri](https://github.com/bewizible), [itokatsu](https://github.com/itokatsu/) and [kuri](https://github.com/donkuri/) to provide an alternative to the Anki notetype we were using at the time, [Aquafina](https://github.com/Aquafina-water-bottle) and later [arbyste](https://github.com/arbyste/)'s [jp-mining-note](https://arbyste.github.io/jp-mining-note-prerelease/) (abbreviated JPMN henceforth). While this note is fantastic and was a major inspiration for Lapis, we had the following issues with it:
 
 1. The note relied on custom handlebars, many of which are now directly implemented in Yomitan.
 2. The heavy amount of JavaScript on the card caused noticeable lag on mobile devices.
@@ -48,7 +49,7 @@ Lapis was co-created by [Ruri](https://github.com/bewizible) and [kuri](https://
 5. The source code was auto-generated, making it a real challenge for both developers and non-developers alike to read and customize. This coupled with the complexity of the note meant it was very hard for people to contribute.
 6. The original developer of the note sadly went MIA in the summer of 2023, leaving arbyste alone to understand the codebase and fix potential issues. While arbyste has done outstanding work, no further development is planned except for bug fixing.
 
-At the same time, another great notetype caught our eyes, [rudnam](https://github.com/rudnam)'s excellent [JP-study](https://github.com/rudnam/JP-study). **Lapis was made to take the best of both worlds and avoid the issues mentioned above**. Ruri focused on the technical side of the project, writing the code and building the note, while kuri helped design the note, gave feedback and led the project.
+At the same time, another great notetype caught our eyes, [rudnam](https://github.com/rudnam)'s excellent [JP-study](https://github.com/rudnam/JP-study). **Lapis was made to take the best of both worlds and avoid the issues mentioned above**. Ruri focused on the technical side of the project, writing the code and building the note, while kuri helped design the note, gave feedback and led the project heavily in its initial stages. After this, itokatsu joined the team as a driving force behind the code development, with Ruri providing feedback and leading/managing the project's codebase (big thanks to itokatsu!).
 **We warmly welcome new contributors!**
 
 ## Key features
@@ -90,6 +91,10 @@ In `MainDefinition`, what you get will depend on the version of JMdict or Jitend
 ## How to update Lapis
 
 In order to update Lapis (provided you're on Anki 23.10+, the supported versions), simply import the newer APKG.
+
+## Lapis themes
+
+[ccos89](https://github.com/ccos89) made a few themes for Lapis based on the [Catpuccin palette](https://catppuccin.com/palette/). You can find them [over here](https://github.com/ccos89/lapis-catpuccin). This might alter the pitch color accent, so do keep it in mind.
 
 ## FAQ
 
@@ -192,6 +197,7 @@ You can adjust any of these `px` values to your preferred font size.
 To change the font family, open the `Styling` section of the card in Anki by going to `Browse`, then select a Lapis card and then click on `Cards` (top-left of the card editor). In the `Styling` section, look for the part labeled `/* Miscellaneous */`, and you will see this:
 
 ```css
+/* Miscellaneous */
 --font-serif: serif;
 --font-sans: sans-serif;
 ```
@@ -200,7 +206,13 @@ You can replace these with any fonts you prefer, or leave them as is to use the 
 
 ### How can I change the bold color?
 
-In case you have the sentence in front with the word bolded, it is bolded in gray. If you want to change that color and you're using the dark theme, look for `--bold: #7d8590;` and change the hexcode to whatever color you want by inputting the hexcode corresponding to that color. For the light theme, it's under `--bold: #999999;`. You can find a hexcode selectors online if you don't know what your color is.
+The default bold color is gray if no pitch accent coloring is available. If you want to change that color, open the `Styling` section of any Lapis card in Anki by going to `Browse`, then select any Lapis card and click on `Cards`  (top-left of the card editor). In the `Styling` section, look for the part labeled `/* Bold color */` and you will see this:
+```css
+/* Bold color */
+--light-mode-bold: #999999;
+--dark-mode-bold: #7d8590;
+```
+Change the hexcode to whatever color you want by inputting the hexcode corresponding to that color. You can find [hexcode selectors](https://htmlcolorcodes.com/) online if you would like a color picker to easily choose from.
 
 ### How can I move the sentence on mobile?
 
