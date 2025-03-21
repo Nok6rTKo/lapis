@@ -40,8 +40,8 @@
     --mobile-info-font-size: 16px;
 
     /* Miscellaneous */
-    --font-serif: "Georgia", "Liberation Serif", "Times New Roman", "Hiragino Mincho ProN", "Noto Serif CJK JP", "Yu Mincho", HanaMinA, HanaMinB, serif;
-    --font-sans: "SF Pro Display", "Liberation Sans", "Segoe UI", "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP", "Meiryo", HanaMinA, HanaMinB, sans-serif;
+    --font-serif: "Hiragino Serif Pr6N", "Noto Serif JP", "Georgia", "Liberation Serif", "Times New Roman", "Hiragino Mincho ProN", "Noto Serif CJK JP", "MS Mincho", HanaMinA, HanaMinB, serif;
+    --font-sans: "Hiragino Sans Pr6N", "Noto Sans JP", "SF Pro Display", "Liberation Sans", "Segoe UI", "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP", "Meiryo", HanaMinA, HanaMinB, sans-serif;
     --light-mode-image-brightness: 85%;
     --dark-mode-image-brightness: 80%;
     --light-mode-tooltip-hover-color: rgb(256, 256, 256, 0.9);
@@ -447,6 +447,9 @@ header {
 }
 
 /* Hide NFSW Images -- make sure you use the tag `NSFW` EXACTLY */
+.NSFW {
+    overflow: hidden;
+}
 .NSFW img {
     filter: blur(30px);
     transition: filter 0.2s;

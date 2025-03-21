@@ -550,6 +550,99 @@
         }
     }
 
+    // Make sentence shorter and focus onto bolded part
+    function focusOnBoldedText() {
+      const sentenceDivs = document.querySelectorAll('.sentence, .sentence-mobile');
+      
+      sentenceDivs.forEach(sentenceDiv => {
+          const boldElement = sentenceDiv.querySelector('b');
+          if (!boldElement) return;
+
+          const originalHTML = sentenceDiv.innerHTML;
+          sentenceDiv.dataset.original = originalHTML;
+
+          truncateSentence(sentenceDiv);
+
+          sentenceDiv.classList.add('clickable-sentence');
+
+          sentenceDiv.addEventListener('click', () => {
+              if (sentenceDiv.classList.contains('truncated')) {
+                  showFullSentence(sentenceDiv);
+              } else {
+                  truncateSentence(sentenceDiv);
+              }
+          });
+      });
+    }
+
+    function truncateSentence(sentenceDiv) {
+      const boldElement = sentenceDiv.querySelector('b');
+      const fullText = sentenceDiv.dataset.original;
+      if (!boldElement || !fullText) return;
+
+      sentenceDiv.innerHTML = fullText;
+      
+      const boldText = boldElement.textContent;
+      const boldIndex = sentenceDiv.textContent.indexOf(boldText);
+      if (boldIndex === -1) return;
+
+      const contextChars = 12; // Characters to show around bold text
+      const start = Math.max(0, boldIndex - contextChars);
+      const end = Math.min(fullText.length, boldIndex + boldText.length + contextChars);
+
+      const range = document.createRange();
+      let startNode, startOffset, endNode, endOffset;
+      let currentPos = 0;
+      let foundStart = false;
+      let foundEnd = false;
+
+      function walkNodes(node) {
+          if (node.nodeType === Node.TEXT_NODE) {
+              const nodeLength = node.textContent.length;
+              if (!foundStart && currentPos + nodeLength >= start) {
+                  startNode = node;
+                  startOffset = start - currentPos;
+                  foundStart = true;
+              }
+              if (!foundEnd && currentPos + nodeLength >= end) {
+                  endNode = node;
+                  endOffset = end - currentPos;
+                  foundEnd = true;
+              }
+              currentPos += nodeLength;
+          } else if (node.nodeType === Node.ELEMENT_NODE) {
+              for (let child of node.childNodes) {
+                  walkNodes(child);
+                  if (foundEnd) break;
+              }
+          }
+      }
+
+      walkNodes(sentenceDiv);
+
+      if (!foundStart || !foundEnd) return;
+
+      try {
+          range.setStart(startNode, Math.max(0, startOffset));
+          range.setEnd(endNode, Math.min(endNode.length, endOffset));
+      } catch (e) {
+          return;
+      }
+
+      const fragment = range.cloneContents();
+      const tempDiv = document.createElement('div');
+      tempDiv.appendChild(fragment);
+
+      sentenceDiv.innerHTML = tempDiv.innerHTML;
+      sentenceDiv.classList.add('truncated');
+    }
+
+    function showFullSentence(sentenceDiv) {
+      sentenceDiv.innerHTML = sentenceDiv.dataset.original;
+      sentenceDiv.classList.remove('truncated');
+    }
+    // Make sentence shorter and focus onto bolded part End
+    
     // Initialize all functions!!!
     function initialize() {
         tweakHTML();
@@ -561,6 +654,7 @@
         setDHHeight();
         hideCorrectDefinition();
         movePrimaryDicts();
+        focusOnBoldedText() // Make sentence shorter and focus onto bolded part
     }
 
     initialize();
