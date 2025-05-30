@@ -570,6 +570,10 @@ main {
 }
 
 /* Hide NFSW Images -- make sure you use the tag `NSFW` EXACTLY */
+.NSFW,
+.nsfw {
+    overflow: hidden;
+}
 .NSFW img,
 .nsfw img {
     filter: blur(30px);
